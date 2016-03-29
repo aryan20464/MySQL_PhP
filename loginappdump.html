@@ -1,0 +1,90 @@
+<!--
+Author: W3layouts
+Author URL: http://w3layouts.com
+License: Creative Commons Attribution 3.0 Unported
+License URL: http://creativecommons.org/licenses/by/3.0/
+-->
+<!DOCTYPE HTML>
+<html ng-app="loginapp">
+<head>
+<title>Purple_loginform Website Template | Home 	 w3layouts</title>
+<link href='http://fonts.googleapis.com/css?family=Droid+Sans' rel='stylesheet' type='text/css'>
+<link href="/newp/css/style.css" rel="stylesheet" type="text/css" media="all" />
+<link rel="stylesheet" type="text/css" href="/newp/dist/sweetalert.css">
+<!-- include the core styles -->
+<link rel="stylesheet" href="/newp/themes/alertify.bootstrap.css" />
+<!-- include a theme, can be included into the core instead of 2 separate files -->
+<link rel="stylesheet" href="/newp/themes/alertify.default.css" />
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+
+<script src="dist/sweetalert.min.js"></script>
+<script src="/newp/themes/alertify.min.js"></script>
+<script src="/newp/node_modules/angular/angular.min.js"></script>
+<!-- -->
+</head>
+<body ng-controller="loginctrl">
+<!-- contact-form -->	
+<div class="message warning">
+<div class="inset">
+	<div class="login-head">
+	<h1>Login Form</h1>
+	<div class="alert-close"> </div> 			
+	</div>
+		<form role="form" name="form1">
+			<li>
+				<input type="text" value="Username" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Username';}" ng-model="user"><a href="#" class=" icon user" ></a>
+			</li>
+				<div class="clear"> </div>
+			<li>
+				<input type="password" value="Password" ng-model="pass" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Password';}"  > <a href="#" class="icon lock"></a>
+			</li>
+			<div class="clear"> </div>
+			<div class="submit">
+				<input type="submit" ng-click="myFunction()" ng-disabled="form1.$invalid" value="Sign in" >
+				<h4><a href="#">Lost your Password ?</a></h4>
+						  <div class="clear">  </div>	
+			</div>				
+		</form>
+		</div>					
+	</div>
+	</div>
+	<div class="clear"> </div>
+
+<!--- footer -->
+<div class="footer">
+	<p>Template by <a href="http://w3layouts.com">w3layouts</a></p>
+</div>
+<script type="text/javascript">
+	var app=angular.module('loginapp',[]);
+	app.controller('loginctrl',function($scope,$http)
+	{
+		$scope.myFunction = function()
+		{
+			//alertify.alert("Message");
+			alert($scope.user+" "+$scope.pass);
+			var $promise=$http.post("/newp/logintest.php",{'user': $scope.user,'pass':$scope.pass});
+			//alert($promise);
+			$promise.then(function(msg){
+				alert(msg.data);
+				if (msg.data==true)
+					{
+						console.log("login sucess");
+						//$window.location.href = '/newp/dataret.html';
+						$location.path("/");
+					}
+				else 
+					{
+						console.log("error login");
+					}
+			});
+             
+        };
+
+	});
+	
+</script>
+</body>
+</html>

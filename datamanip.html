@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html ng-app="insertapp">
+<head>
+	<title>To insert data</title>
+	<script src="/newp/node_modules/angular/angular.min.js"></script>
+</head>
+<body ng-controller="insertcontroller">
+<table cellpadding="2" cellspacing="2" >
+	<tr>
+	<td>ID</td>
+	<td><input type="text" ng-model="eid"></td>
+	</tr>
+	<tr>
+	<td>E Number</td>
+	<td><input type="text" ng-model="eno"></td>
+	</tr>
+	<tr>
+	<td>First name</td>
+	<td><input type="text" ng-model="fname"></td>
+	</tr>
+	<tr>
+	<td>Last name</td>
+	<td><input type="text" ng-model="lname"></td>
+	</tr>
+	<tr>
+	<td>Department</td>
+	<td><input type="text" ng-model="dept"></td>
+	</tr>
+	<tr>
+	<td>&nbsp;</td>
+	<td><input type="button" value="insert" ng-click="insertdata()"></td>
+	</tr>
+</table>
+<script type="text/javascript">
+	var app=angular.module('insertapp',[]);
+	app.controller('insertcontroller',function($scope,$http)
+	{
+
+		$scope.insertdata = function()
+		{
+			alert($scope.eid);
+			$http.post("/newp/insert.php",{'eid': $scope.eid,'eno':$scope.eno,'fname': $scope.fname,'lname': $scope.lname,'dept':$scope.dept})
+             .success(function(data, status, headers, config)
+              {
+              console.log("inserted Successfully");
+              alert("Data instruction sent");
+              }
+              );
+
+
+		};
+
+
+
+	});
+</script>
+</body>
+</html>

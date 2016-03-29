@@ -1,0 +1,17 @@
+            <table class="table table-striped">
+				<thead>
+					<tr>
+						<td>Name</td>
+						<td>Description</td>
+						<td><a href="#/add"><span class="glyphicon glyphicon-plus-sign"></span></a></td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="person in crew">
+						<td>{{person.name}}</td>
+						<td>{{person.job}}</td>
+						<td><a href="#/edit/{{ $index }}"><span class="glyphicon glyphicon-edit"></span></a>
+						</td>
+					</tr>
+				</tbody>
+			</table>	

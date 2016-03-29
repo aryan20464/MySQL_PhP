@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html ng-app="retrieveapp">
+<head>
+	<title>Data retrieve from mysql</title>
+	<link rel="stylesheet" href="/newp/node_modules/bootstrap/dist/css/bootstrap.css"/>
+	<script src="/newp/node_modules/angular/angular.min.js"></script>
+</head>
+<body ng-controller="retcontroller" ng-init="retrievedata()">
+<table class="table" style="width: 500px">
+<thead>
+	<th>ID</th>
+	<th>No</th>
+	<th>First Name</th>
+	<th>Last Name</th>
+	<th>Dept</th>
+	<th>Functionalities</th>
+</thead>
+<tbody>
+	<tr ng-repeat="row in resultarr">
+	<td>{{row.id}}</td>
+	<td>{{row.emp_no}}</td>
+	<td>{{row.first_name}}</td>
+	<td>{{row.last_name}}</td>
+	<td>{{row.dept_name}}</td>
+	<td>
+		<input type="button" class="btn btn-danger" value="Delete" ng-click="del(row.id,$index)"> 
+        <input type="button" value="Update" class="btn btn-warning" ng-click="upd(row.id,row.emp_no,row.first_name,row.last_name,row.dept_name)">
+	</td>
+	</tr>
+</tbody>
+</table>
+
+<table cellpadding="2" cellspacing="2" >
+	<tr>
+	<td>ID</td>
+	<td><input type="text" ng-model="eid"></td>
+	</tr>
+	<tr>
+	<td>E Number</td>
+	<td><input type="text" ng-model="eno"></td>
+	</tr>
+	<tr>
+	<td>First name</td>
+	<td><input type="text" ng-model="fname"></td>
+	</tr>
+	<tr>
+	<td>Last name</td>
+	<td><input type="text" ng-model="lname"></td>
+	</tr>
+	<tr>
+	<td>Department</td>
+	<td><input type="text" ng-model="dept"></td>
+	</tr>
+	<tr>
+	<td>&nbsp;</td>
+	<td><input type="button" value="insert" ng-click="insertdata()"> 
+	<input type="button" value="update" ng-click="updinsert()"></td>
+	</tr>
+</table>
+
+<script type="text/javascript">
+	var app=angular.module('retrieveapp',[]);
+	app.controller('retcontroller',function($scope,$http)
+	{
+		//retrievedata();
+		$scope.retrievedata = function()
+		{
+			 alert("hello");
+			 $http.get("http://localhost/newp/server/retrieve.php")
+             .success(function(data)
+              {
+               $scope.resultarr=data;
+               alert($scope.resultarr);
+              }
+              );
+		};
+
+		$scope.insertdata = function()
+		{
+			alert($scope.eid);
+			$http.post("/newp/server/insert.php",{'eid': $scope.eid,'eno':$scope.eno,'fname': $scope.fname,'lname': $scope.lname,'dept':$scope.dept})
+             .success(function(data, status, headers, config)
+              {
+              console.log("inserted Successfully");
+              alert("Data instruction sent");
+              }
+              );
+		};
+
+		$scope.del=function(id,index)
+		{
+			alert("Iam in delete function");
+			alert(id);
+			$http.post("/newp/server/delete.php",{'eid':id})
+			success(function(data, status, headers, config)
+              {
+              console.log("Deleted Successfully");
+              alert("Data instruction sent");
+              }
+              );
+
+		};
+
+		$scope.upd = function(id,noer,fi_name,la_name,de_name)
+		{
+			alert("iam in update function");
+			alert(id);
+			$scope.eid=id;
+			$scope.eno=noer;
+			$scope.fname=fi_name;
+			$scope.lname=la_name;
+			$scope.dept=de_name;
+
+		};
+
+		$scope.updinsert = function()
+		{
+			alert("in updinsert");
+			alert($scope.eid);
+			$http.post("/newp/server/update.php",{'emp_id': $scope.eid,'emp_no':$scope.eno,'emp_fname': $scope.fname,'emp_lname': $scope.lname,'emp_dept':$scope.dept})
+             .success(function(data, status, headers, config)
+              {
+              console.log("udpate successful");
+              alert("Data update sent");
+              }
+              );
+
+		};
+
+
+	});
+</script>
+</body>
+</html>
+
