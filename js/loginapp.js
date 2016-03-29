@@ -1,4 +1,4 @@
-  var app=angular.module('loginapp',[]);
+  var app=angular.module('retrieve',[]);
 	app.controller('retcontroller',function($scope,$http)
 	{
 		//retrievedata();
